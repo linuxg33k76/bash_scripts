@@ -22,6 +22,14 @@ sudo snap install spotify
 
 sudo snap install mailspring
 
+# Check for Macbook Air wireless hardware and install extra package if needed
+
+lshw -c network | grep BCM4360
+
+if [ $? -eq 0 ]; then
+	sudo apt-get install bcmwl-kernel-source
+fi
+
 # Add screenfetch to .bashrc if it does NOT already exist
 
 cat $CONFIG_FILE | grep screenfetch
