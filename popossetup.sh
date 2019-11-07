@@ -22,6 +22,8 @@ sudo snap install spotify
 
 sudo snap install mailspring
 
+sudo snap install simplenote
+
 # Check for Macbook Air wireless hardware and install extra package if needed
 
 lshw -c network | grep BCM4360
