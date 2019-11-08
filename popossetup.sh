@@ -45,7 +45,7 @@ fi
 
 # Create Bash Aliases File if it does NOT already exist
 
-cat $ALIAS_FILE | grep alias
+test -f $ALIAS_FILE
 
 if [ $? -ne 0 ]; then
 
