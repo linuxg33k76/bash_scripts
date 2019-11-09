@@ -49,7 +49,13 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	lshw -c network | grep BCM4360
 
 	if [ $? -eq 0 ]; then
+	
+		echo
+		echo "BCM4360 WiFi adapter found.  Installing driver..."
+		echo
+
 		sudo apt-get install bcmwl-kernel-source
+
 	fi
 
 	# Add screenfetch to .bashrc if it does NOT already exist
@@ -65,6 +71,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 		echo "" >> $CONFIG_FILE
 		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
 		echo "screenfetch" >> $CONFIG_FILE
+
 	fi
 
 	# Create Bash Aliases File if it does NOT already exist
@@ -80,6 +87,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 		echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
 		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
 		echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
+	
 	fi
 
 	# Create .vimrc File if it does NOT already exist
@@ -95,6 +103,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 		echo "syntax on" >> $VIMRC
 		echo "set number" >> $VIMRC
 		echo "colorscheme ron" >> $VIMRC
+	
 	fi
 
 	# Make dev directory
