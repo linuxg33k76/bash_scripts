@@ -5,70 +5,125 @@
 CONFIG_FILE="/home/$(whoami)/.bashrc"
 ALIAS_FILE="/home/$(whoami)/.bash_aliases"
 VIMRC="/home/$(whoami)/.vimrc"
-#LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log" 
+DEV="/home/$(whoami)/dev"
+LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log" 
 
-# Install missing packages via apt
+# Setup missing items
 
-sudo apt-get clean && sudo apt-get update -y
+{
 
-sudo apt-get install -y snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2 steam
+	echo
+	echo "Updating and Setting up critical packages..."
+	echo
 
-sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+	# Install missing packages via apt
 
-# Install Snap Packages
+	sudo apt-get clean && sudo apt-get update -y
 
-sudo snap install p3x-onenote
+	sudo apt-get install -y snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2 steam
 
-sudo snap install skype --classic
+	sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
 
-sudo snap install spotify
+	# Install Snap Packages
 
-sudo snap install mailspring
+	echo
+	echo "Installing snap packages..."
+	echo
 
-#sudo snap install simplenote
+	sudo snap install p3x-onenote
 
-# Check for Macbook Air wireless hardware and install extra package if needed
+	sudo snap install skype --classic
 
-lshw -c network | grep BCM4360
+	sudo snap install spotify
 
-if [ $? -eq 0 ]; then
-	sudo apt-get install bcmwl-kernel-source
-fi
+	sudo snap install mailspring
 
-# Add screenfetch to .bashrc if it does NOT already exist
+	#sudo snap install simplenote
 
-cat $CONFIG_FILE | grep screenfetch
+	# Check for Macbook Air wireless hardware and install extra package if needed
 
-if [ $? -ne 0 ]; then 
+	echo
+	echo "Checking for Macbook Air WiFi adapter..."
+	echo
 
-	echo "" >> $CONFIG_FILE
-	echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
-	echo "screenfetch" >> $CONFIG_FILE
-fi
+	lshw -c network | grep BCM4360
 
-# Create Bash Aliases File if it does NOT already exist
+	if [ $? -eq 0 ]; then
+		sudo apt-get install bcmwl-kernel-source
+	fi
 
-test -f $ALIAS_FILE
+	# Add screenfetch to .bashrc if it does NOT already exist
 
-if [ $? -ne 0 ]; then
+	echo
+	echo "Setting up screenfetch on login..."
+	echo
 
-	echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
-	echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
-	echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
-fi
+	cat $CONFIG_FILE | grep screenfetch
 
-# Create .vimrc File if it does NOT already exist
+	if [ $? -ne 0 ]; then 
 
-test -f $VIMRC
+		echo "" >> $CONFIG_FILE
+		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
+		echo "screenfetch" >> $CONFIG_FILE
+	fi
 
-if [ $? -ne 0 ]; then
+	# Create Bash Aliases File if it does NOT already exist
 
-	echo "syntax on" >> $VIMRC
-	echo "set number" >> $VIMRC
-	echo "colorscheme ron" >> $VIMRC
-fi
+	echo
+	echo "Testing for .bash_aliases file and adding aliases..."
+	echo
 
-# Adjust Ubuntu default editor
+	test -f $ALIAS_FILE
 
-sudo update-alternatives --config editor
+	if [ $? -ne 0 ]; then
 
+		echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
+		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
+		echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
+	fi
+
+	# Create .vimrc File if it does NOT already exist
+
+	echo
+	echo "Setting up the vim config file..." 
+	echo
+
+	test -f $VIMRC
+
+	if [ $? -ne 0 ]; then
+
+		echo "syntax on" >> $VIMRC
+		echo "set number" >> $VIMRC
+		echo "colorscheme ron" >> $VIMRC
+	fi
+
+	# Make dev directory
+
+	echo
+	echo "Creating a dev directory under user's /home directory..."
+	echo
+
+	test -d $DEV
+
+	if [ $? -ne 0 ]; then
+		mkdir $DEV
+	fi
+
+	echo 
+	echo "Setting default editor via user input..."
+	echo
+
+	# Adjust Ubuntu default editor
+
+	sudo update-alternatives --config editor
+
+	echo 
+	echo "***NOTE: You will need to download the following:"
+	echo "    ExpanDrive - for cloud drive support"
+	echo "    ExpressVPN - VPN application"
+	echo "    BoostNote - BoostNote application"
+	echo
+	echo "Enjoy your system!"
+	echo
+
+} | tee -a $LOG
