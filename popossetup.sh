@@ -5,12 +5,15 @@
 CONFIG_FILE="/home/$(whoami)/.bashrc"
 ALIAS_FILE="/home/$(whoami)/.bash_aliases"
 VIMRC="/home/$(whoami)/.vimrc"
+#LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log" 
 
 # Install missing packages via apt
 
-sudo apt-get clean && sudo apt-get update
+sudo apt-get clean && sudo apt-get update -y
 
-sudo apt-get install snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2
+sudo apt-get install -y snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2 steam
+
+sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
 
 # Install Snap Packages
 
@@ -68,3 +71,4 @@ fi
 # Adjust Ubuntu default editor
 
 sudo update-alternatives --config editor
+
