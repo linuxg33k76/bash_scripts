@@ -38,7 +38,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo snap install mailspring
 
-	#sudo snap install simplenote
+	sudo snap install tusk
 
 	# Check for Macbook Air wireless hardware and install extra package if needed
 
