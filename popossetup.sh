@@ -10,7 +10,7 @@ VIMRC="/home/$(whoami)/.vimrc"
 
 sudo apt-get clean && sudo apt-get update
 
-sudo apt-get install snapd code vim screenfetch gnome-tweaks libavcodec-extra
+sudo apt-get install snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2
 
 # Install Snap Packages
 
@@ -22,7 +22,7 @@ sudo snap install spotify
 
 sudo snap install mailspring
 
-sudo snap install simplenote
+#sudo snap install simplenote
 
 # Check for Macbook Air wireless hardware and install extra package if needed
 
