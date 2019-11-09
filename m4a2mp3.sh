@@ -31,8 +31,8 @@ echo
 for i in *.m4a; do
     # Convert .m4a to .mp3 using lame
 
-    lame -b 320 -h "${i}" "${i%.m4a}.mp3"
-    #ffmpeg -i "$i" -codec:v copy -codec:a libmp3lame -q:a 2 "${i%.m4a}.mp3"
+    #lame -b 320 -h "${i}" "${i%.m4a}.mp3"
+    ffmpeg -i "$i" -codec:v copy -codec:a libmp3lame -q:a 2 "${i%.m4a}.mp3"
 
     # Update the Modified and Access times to match old .m4a file
     touch "${i%.m4a}.mp3" -r "${i}"
