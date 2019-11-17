@@ -40,6 +40,8 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo snap install tusk
 
+	sudo snap install journey
+
 	# Check for Macbook Air wireless hardware and install extra package if needed
 
 	echo
