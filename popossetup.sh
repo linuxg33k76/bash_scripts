@@ -20,7 +20,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo apt-get clean && sudo apt-get update -y
 
-	sudo apt-get install -y snapd code vim screenfetch gnome-tweaks libavcodec-extra nixnote2 steam deja-dup
+	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra nixnote2 steam deja-dup
 
 	sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
 
@@ -78,13 +78,13 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "Setting up screenfetch on login..."
 	echo
 
-	cat $CONFIG_FILE | grep screenfetch
+	cat $CONFIG_FILE | grep neofetch
 
 	if [ $? -ne 0 ]; then 
 
 		echo "" >> $CONFIG_FILE
 		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
-		echo "screenfetch" >> $CONFIG_FILE
+		echo "neofetch" >> $CONFIG_FILE
 
 	fi
 
