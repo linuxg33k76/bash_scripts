@@ -72,10 +72,10 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	fi
 
-	# Add screenfetch to .bashrc if it does NOT already exist
+	# Add neofetch to .bashrc if it does NOT already exist
 
 	echo
-	echo "Setting up screenfetch on login..."
+	echo "Setting up neofetch on login..."
 	echo
 
 	cat $CONFIG_FILE | grep neofetch
@@ -83,7 +83,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	if [ $? -ne 0 ]; then 
 
 		echo "" >> $CONFIG_FILE
-		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
+		echo "# Entry for neofetch on startup of terminal" >> $CONFIG_FILE
 		echo
 		echo "neofetch" >> $CONFIG_FILE
 
