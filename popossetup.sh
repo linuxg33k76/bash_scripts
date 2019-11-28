@@ -84,6 +84,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 		echo "" >> $CONFIG_FILE
 		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
+		echo
 		echo "neofetch" >> $CONFIG_FILE
 
 	fi
