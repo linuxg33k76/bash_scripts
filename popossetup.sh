@@ -20,7 +20,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo apt-get clean && sudo apt-get update -y
 
-	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra nixnote2 steam deja-dup
+	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird
 
 	sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
 
@@ -30,29 +30,29 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "Installing snap packages..."
 	echo
 
-	sudo snap install p3x-onenote
+	#sudo snap install p3x-onenote
 
 	sudo snap install skype --classic
 
 	sudo snap install spotify
 
-	sudo snap install mailspring
+	#sudo snap install mailspring
 
-	sudo snap install tusk
+	#sudo snap install tusk
 
 	# Install Brave Web Browser
 
-	sudo apt install apt-transport-https curl
+	#sudo apt install apt-transport-https curl
 
-	curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+	#curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
 
-	source /etc/os-release
+	#source /etc/os-release
 
-	echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/brave-browser-release-${UBUNTU_CODENAME}.list
+	#echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/brave-browser-release-${UBUNTU_CODENAME}.list
 
-	sudo apt update
+	#sudo apt update
 
-	sudo apt install brave-browser
+	#sudo apt install brave-browser
 
 	# Check for Macbook Air wireless hardware and install extra package if needed
 
@@ -72,10 +72,10 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	fi
 
-	# Add screenfetch to .bashrc if it does NOT already exist
+	# Add neofetch to .bashrc if it does NOT already exist
 
 	echo
-	echo "Setting up screenfetch on login..."
+	echo "Setting up neofetch on login..."
 	echo
 
 	cat $CONFIG_FILE | grep neofetch
@@ -83,7 +83,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	if [ $? -ne 0 ]; then 
 
 		echo "" >> $CONFIG_FILE
-		echo "# Entry for screenfetch on startup of terminal" >> $CONFIG_FILE
+		echo "# Entry for neofetch on startup of terminal" >> $CONFIG_FILE
 		echo
 		echo "neofetch" >> $CONFIG_FILE
 
@@ -100,8 +100,8 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	if [ $? -ne 0 ]; then
 
 		echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
-		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
 		echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
+		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
 	
 	fi
 
