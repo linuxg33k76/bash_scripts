@@ -34,7 +34,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo snap install skype --classic
 
-	sudo snap install spotify
+	#sudo snap install spotify
 
 	#sudo snap install mailspring
 
