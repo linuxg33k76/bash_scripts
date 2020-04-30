@@ -16,13 +16,21 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "Updating and Setting up critical packages..."
 	echo
 
-	# Install missing packages via apt
-
+	# Install system updates
+	
 	sudo apt-get clean && sudo apt-get update -y
+
+	# Install favorite packages
 
 	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap
 
+	# Install additional Codecs
+
 	sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+
+	# Install foreign filesystem tools
+
+	sudo apt-get install -y exfat-fuse exfat-utils
 
 	# Install Snap Packages
 
