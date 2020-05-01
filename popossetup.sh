@@ -26,7 +26,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install favorite packages
 
-	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap
+	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap google-chrome-stable
 
 	# Install additional Codecs
 
