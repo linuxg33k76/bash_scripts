@@ -22,7 +22,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install system upgrades
 
-	sudo apt-get clean && sudo apt-get update &&& sudo apt-get dist-upgrade -y
+	sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade -y
 
 	# Install favorite packages
 
