@@ -36,6 +36,10 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo apt-get install -y exfat-fuse exfat-utils
 
+	# Remove old packages no longer necessary
+
+	sudo apt-get autoremove -y
+
 	# Install Snap Packages
 
 	echo
