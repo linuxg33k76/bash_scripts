@@ -18,11 +18,11 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install system updates
 	
-	sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade -y
+	sudo apt-get update && sudo apt-get upgrade -y
 
 	# Install system upgrades
 
-	sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade -y
+	sudo apt-get update && sudo apt-get dist-upgrade -y
 
 	# Install favorite packages
 
@@ -38,7 +38,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Remove old packages no longer necessary
 
-	sudo apt-get autoremove -y
+	sudo apt-get update && sudo apt-get autoremove -y
 
 	# Install Snap Packages
 
@@ -115,8 +115,8 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	if [ $? -ne 0 ]; then
 
-		echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
-		echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
+		echo "alias update='sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
+		echo "alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
 		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
 	
 	fi
