@@ -18,7 +18,11 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install system updates
 	
-	sudo apt-get clean && sudo apt-get update -y
+	sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade -y
+
+	# Install system upgrades
+
+	sudo apt-get clean && sudo apt-get update &&& sudo apt-get dist-upgrade -y
 
 	# Install favorite packages
 
