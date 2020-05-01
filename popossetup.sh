@@ -18,11 +18,11 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install system updates
 	
-	sudo apt-get update && sudo apt-get upgrade -y
+	sudo apt-get update && sudo apt-get upgrade
 
 	# Install system upgrades
 
-	sudo apt-get update && sudo apt-get dist-upgrade -y
+	sudo apt-get update && sudo apt-get dist-upgrade
 
 	# Install favorite packages
 
@@ -38,7 +38,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Remove old packages no longer necessary
 
-	sudo apt-get update && sudo apt-get autoremove -y
+	sudo apt-get update && sudo apt-get autoremove
 
 	# Install Snap Packages
 
