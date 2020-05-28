@@ -34,7 +34,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install foreign filesystem tools
 
-	sudo apt-get install -y exfat-fuse exfat-utils
+	sudo apt-get install -y exfat-fuse exfat-utils sshfs
 
 	# Remove old packages no longer necessary
 
