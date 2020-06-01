@@ -36,6 +36,10 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	sudo apt-get install -y exfat-fuse exfat-utils sshfs
 
+	# Python3 Packages
+
+	sudo apt-get install -y python3-pip python3-venv
+
 	# Remove old packages no longer necessary
 
 	sudo apt-get update && sudo apt-get autoremove
