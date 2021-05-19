@@ -165,6 +165,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "***NOTE: You will need to download the following:"
 	echo "    ExpanDrive - for cloud drive support"
 	echo "    ExpressVPN - VPN application"
+	echo "	  Microsoft Edge (Dev) - Web Browser"
 	echo
 	echo "Enjoy your system!"
 	echo
