@@ -26,7 +26,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install favorite packages
 
-	sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap google-chrome-stable
+	sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap
 
 	# Install additional Codecs
 
@@ -52,7 +52,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	#sudo snap install p3x-onenote
 
-	sudo snap install skype --classic
+	#sudo snap install skype --classic
 
 	#sudo snap install spotify
 
