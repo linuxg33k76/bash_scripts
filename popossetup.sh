@@ -16,13 +16,33 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "Updating and Setting up critical packages..."
 	echo
 
-	# Install missing packages via apt
+	# Install system updates
+	
+	sudo apt update && sudo apt upgrade
 
-	sudo apt-get clean && sudo apt-get update -y
+	# Install system upgrades
 
-	sudo apt-get install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird
+	sudo apt update && sudo apt full-upgrade
 
-	sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+	# Install favorite packages
+
+	sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap google-chrome-stable
+
+	# Install additional Codecs
+
+	sudo apt install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libavcodec-extra gstreamer1.0-libav
+
+	# Install foreign filesystem tools
+
+	sudo apt install -y exfat-fuse exfat-utils sshfs
+
+	# Python3 Packages
+
+	sudo apt install -y python3-pip python3-venv
+
+	# Remove old packages no longer necessary
+
+	sudo apt update && sudo apt autoremove
 
 	# Install Snap Packages
 
@@ -68,7 +88,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 		echo "BCM4360 WiFi adapter found.  Installing driver..."
 		echo
 
-		sudo apt-get install bcmwl-kernel-source
+		sudo apt install bcmwl-kernel-source
 
 	fi
 
@@ -99,9 +119,9 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	if [ $? -ne 0 ]; then
 
-		echo "alias update='sudo apt-get clean && sudo apt-get update && sudo apt-get upgrade'" >> $ALIAS_FILE
-		echo "alias upgrade='sudo apt-get clean && sudo apt-get update && sudo apt-get dist-upgrade'" >> $ALIAS_FILE
-		echo "alias cleanup='sudo apt-get update && sudo apt autoremove'" >> $ALIAS_FILE
+		echo "alias update='sudo apt update && sudo apt upgrade'" >> $ALIAS_FILE
+		echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" >> $ALIAS_FILE
+		echo "alias cleanup='sudo apt update && sudo apt autoremove'" >> $ALIAS_FILE
 	
 	fi
 
@@ -145,6 +165,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "***NOTE: You will need to download the following:"
 	echo "    ExpanDrive - for cloud drive support"
 	echo "    ExpressVPN - VPN application"
+	echo "	  Microsoft Edge (Dev) - Web Browser"
 	echo
 	echo "Enjoy your system!"
 	echo
