@@ -159,14 +159,23 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Turn off Bluetooth ERTM - append to the end of /etc/sysfs.conf
 
+	echo 
 	echo "Enabling Bluetooth Xbox One Controller Support."
 	echo
-	sudo chmod o+w /etc/sysfs.conf # enable writing to /etc/sysfs.conf
-	sudo echo "module/bluetooth/parameters/disable_ertm=1" >> /etc/sysfs.conf
-	sudo chmod o-w /etc/sysfs.conf # dsiable writing to /etc/sysfs.conf
+	grep "disable_ertm=1" /etc/sysfs.conf
+	if [ $? -ne 0 ]; then
+		echo "/etc/sysfs.conf edits not found.  Editing now..."
+		echo
+		sudo chmod o+w /etc/sysfs.conf # enable writing to /etc/sysfs.conf
+		sudo echo "module/bluetooth/parameters/disable_ertm=1" >> /etc/sysfs.conf
+		sudo chmod o-w /etc/sysfs.conf # dsiable writing to /etc/sysfs.conf
+		echo
+		echo "Be sure to reboot to complete disabling of Bluetooth ERTM (Enhanced Re-Transmission Mode)."
+	else
+		echo "Bluetooth ERTM already disabled."
+		echo
+	fi
 	echo
-	echo "Be sure to reboot to complete disabling of Bluetooth ERTM (Enhanced Re-Transmission Mode)."
-	echo 
 
 	# Adjust Ubuntu default editor
 
