@@ -26,7 +26,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	# Install favorite packages
 
-	sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap
+	sudo apt install -y snapd code vim neofetch gnome-tweaks libavcodec-extra steam deja-dup thunderbird zenmap sysfsutils
 
 	# Install additional Codecs
 
@@ -157,6 +157,26 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo "Setting default editor via user input..."
 	echo
 
+	# Turn off Bluetooth ERTM - append to the end of /etc/sysfs.conf
+
+	echo 
+	echo "Enabling Bluetooth Xbox One Controller Support."
+	echo
+	grep "disable_ertm=1" /etc/sysfs.conf
+	if [ $? -ne 0 ]; then
+		echo "/etc/sysfs.conf edits not found.  Editing now..."
+		echo
+		sudo chmod o+w /etc/sysfs.conf # enable writing to /etc/sysfs.conf
+		sudo echo "module/bluetooth/parameters/disable_ertm=1" >> /etc/sysfs.conf
+		sudo chmod o-w /etc/sysfs.conf # dsiable writing to /etc/sysfs.conf
+		echo
+		echo "Be sure to reboot to complete disabling of Bluetooth ERTM (Enhanced Re-Transmission Mode)."
+	else
+		echo "Bluetooth ERTM already disabled."
+		echo
+	fi
+	echo
+
 	# Adjust Ubuntu default editor
 
 	sudo update-alternatives --config editor
@@ -169,5 +189,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 	echo
 	echo "Enjoy your system!"
 	echo
+
+	
 
 } | tee -a $LOG
