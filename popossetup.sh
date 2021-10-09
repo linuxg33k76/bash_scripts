@@ -119,7 +119,7 @@ LOG="/home/$(whoami)/Pop_OS_script_$(date +%d%b%Y-%H:%M).log"
 
 	if [ $? -ne 0 ]; then
 
-		echo "alias update='sudo apt update && sudo apt upgrade'" >> $ALIAS_FILE
+		echo "alias update='sudo apt update && sudo apt upgrade && flatpak update'" >> $ALIAS_FILE
 		echo "alias upgrade='sudo apt update && sudo apt full-upgrade'" >> $ALIAS_FILE
 		echo "alias cleanup='sudo apt update && sudo apt autoremove'" >> $ALIAS_FILE
 	
