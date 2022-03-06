@@ -4,3 +4,4 @@ if [ $? -eq 0 ]; then
 else
    echo "Remote SAMBA share FAILED to unmount!"
 fi
+
