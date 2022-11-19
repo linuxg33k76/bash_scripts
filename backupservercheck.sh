@@ -3,7 +3,7 @@
 # Backup Check - checks for backup server and alerts user
 # Created by Ben Calvert on 16 Sept 2022
 
-BACKUPSERVER="fedora-macmini"
+BACKUPSERVER="mothership"
 
 
 # Mask all output of the ping command to hide extra terminal content
