@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Author: Ben Calvert - 04 June 2023
 
 # Get battery status
 
