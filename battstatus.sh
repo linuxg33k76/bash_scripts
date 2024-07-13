@@ -14,7 +14,14 @@ echo "*********************"
 echo "ACPI Battery status: "
 echo "*********************"
 echo
-acpi -V | grep --regexp="Battery" --regex="Thermal"
+# if command acpi is not found, echo message and exit
+if ! command -v acpi &> /dev/null
+then
+    echo "acpi is not installed. Please install acpi and try again."
+    exit
+else
+    acpi -V | grep --regexp="Battery" --regex="Thermal"
+fi
 echo
 echo "*********************"
 echo
