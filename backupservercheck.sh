@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Backup Check - checks for backup server and alerts user
 # Created by Ben Calvert on 16 Sept 2022
