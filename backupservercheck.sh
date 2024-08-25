@@ -16,3 +16,4 @@ else
   echo "Backup Server is OFFLINE"
 fi
 
+exit 0
