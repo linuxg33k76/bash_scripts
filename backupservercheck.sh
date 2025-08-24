@@ -27,7 +27,7 @@ echo
 
 # Test to see if backup mnt is available
 
-if mount | grep "//${BACKUPSERVER}/usbdisk1/backups on /mnt/remote_cifs type cifs" > /dev/null; then
+if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
   echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
 else
   echo -e "${RED}!! WARNING !!  ${NC}Mount point is ${RED}UNAVAILABLE!!${NC}  Use 'sudo mount -a' to remount."
