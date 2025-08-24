@@ -8,7 +8,7 @@ GREEN='\e[32m'
 NC='\e[0m' # No Color
 
 # Local DNS entry of NAS
-BACKUPSERVER="amber-da-vault.local"
+BACKUPSERVER="ls720dd7b.local"
 
 # Mask all output of the ping command to hide extra terminal content
 ping -c 1 $BACKUPSERVER 1> /dev/null 2> /dev/null
@@ -27,7 +27,7 @@ echo
 
 # Test to see if backup mnt is available
 
-if [ "$(mount | grep '//amber-da-vault/vault/backups on /mnt/remote_cifs type cifs')" ]; then
+if mount | grep "//${BACKUPSERVER}/usbdisk1/backups on /mnt/remote_cifs type cifs" > /dev/null; then
   echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
 else
   echo -e "${RED}!! WARNING !!  ${NC}Mount point is ${RED}UNAVAILABLE!!${NC}  Use 'sudo mount -a' to remount."
