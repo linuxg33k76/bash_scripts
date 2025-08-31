@@ -29,6 +29,11 @@ echo
 
 if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
   echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+
+# Check on Immutable Systems
+elif mount | grep "//${BACKUPSERVER}/vault/backups on /var/mnt/remote_cifs type cifs" > /dev/null; then
+  echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+
 else
   echo -e "${RED}!! WARNING !!  ${NC}Mount point is ${RED}UNAVAILABLE!!${NC}  Use 'sudo mount -a' to remount."
 fi
