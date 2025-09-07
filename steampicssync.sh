@@ -39,11 +39,6 @@ else
   RESULTS_FILE="$HOME/steampicssync_results.log"
 fi
 
-# Define colors for output
-RED='\e[31m'
-GREEN='\e[32m'
-NC='\e[0m' # No Color
-
 # Local DNS entry of NAS
 BACKUPSERVER="ls720dd7b.local"
 
@@ -52,18 +47,18 @@ BACKUPSERVER="ls720dd7b.local"
 
 if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
   echo
-  echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+  echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
   echo
 
 # Check on Immutable Systems
 elif mount | grep "//${BACKUPSERVER}/vault/backups on /var/mnt/remote_cifs type cifs" > /dev/null; then
   echo
-  echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+  echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
   echo
 
 else
   echo
-  echo -e "${RED}!! WARNING !!  ${NC}Mount point is ${RED}UNAVAILABLE!!${NC}  Use 'sudo mount -a' to remount."
+  echo -e "!! WARNING !!  Mount point is UNAVAILABLE!!  Use 'sudo mount -a' to remount."
   echo
   exit 1
 fi
