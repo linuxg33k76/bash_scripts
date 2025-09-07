@@ -39,6 +39,36 @@ else
   RESULTS_FILE="$HOME/steampicssync_results.log"
 fi
 
+# Define colors for output
+RED='\e[31m'
+GREEN='\e[32m'
+NC='\e[0m' # No Color
+
+# Local DNS entry of NAS
+BACKUPSERVER="ls720dd7b.local"
+
+# Check if destination directory is mounted
+# Test to see if backup mnt is available
+
+if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
+  echo
+  echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+  echo
+
+# Check on Immutable Systems
+elif mount | grep "//${BACKUPSERVER}/vault/backups on /var/mnt/remote_cifs type cifs" > /dev/null; then
+  echo
+  echo -e "Mount point is ${GREEN} AVAILABLE! ${NC}Okay to backup/restore!"
+  echo
+
+else
+  echo
+  echo -e "${RED}!! WARNING !!  ${NC}Mount point is ${RED}UNAVAILABLE!!${NC}  Use 'sudo mount -a' to remount."
+  echo
+  exit 1
+fi
+
+
 # Run the rsync command and log the results (based on success of each previous command)
 echo "$DATE" | tee -a $RESULTS_FILE && rsync -av $SOURCE_DIR $DEST_DIR | tee -a $RESULTS_FILE && echo "--------------------------------------------------------" | tee -a $RESULTS_FILE && echo "" | tee -a $RESULTS_FILE
 
