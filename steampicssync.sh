@@ -28,7 +28,7 @@ fi
 if [ -n "$2" ]; then
   DEST_DIR="$2"
 else
-  DEST_DIR="/mnt/remote_cifs/CyberPowerPC/Steam_Game_Photos_Backup/"
+  DEST_DIR="/media/samuari/Ext_Vault/Steam_Photos_Backup/"
 fi
 
 # if 3rd argument is given, use it as the results log file path
@@ -65,7 +65,7 @@ fi
 
 
 # Run the rsync command and log the results (based on success of each previous command)
-echo "$DATE" | tee -a $RESULTS_FILE && rsync -av $SOURCE_DIR $DEST_DIR | tee -a $RESULTS_FILE && echo "--------------------------------------------------------" | tee -a $RESULTS_FILE && echo "" | tee -a $RESULTS_FILE
+echo "$DATE" | tee -a $RESULTS_FILE && rsync -av --delete $SOURCE_DIR $DEST_DIR | tee -a $RESULTS_FILE && echo "--------------------------------------------------------" | tee -a $RESULTS_FILE && echo "" | tee -a $RESULTS_FILE
 
 # End of script
 exit 0
