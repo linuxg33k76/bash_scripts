@@ -6,7 +6,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "Usage: steampicssync.sh [source_directory] [destination_directory] [results_file]"
   echo "If no arguments are provided, defaults will be used:"
   echo "  Source Directory: $HOME/Pictures/Steam/"
-  echo "  Destination Directory: /mnt/remote_cifs/CyberPowerPC/Steam_Game_Photos_Backup/"
+  echo "  Destination Directory: /media/samurai/Ext_Vault/Steam_Game_Photos_Backup/"
   echo "  Results File: $HOME/steampicssync_results.log"
   echo
   exit 0
@@ -28,7 +28,7 @@ fi
 if [ -n "$2" ]; then
   DEST_DIR="$2"
 else
-  DEST_DIR="/media/samuari/Ext_Vault/Steam_Photos_Backup/"
+  DEST_DIR="/media/samurai/Ext_Vault/Steam_Photos_Backup/"
 fi
 
 # if 3rd argument is given, use it as the results log file path
@@ -39,29 +39,29 @@ else
   RESULTS_FILE="$HOME/steampicssync_results.log"
 fi
 
-# Local DNS entry of NAS
-BACKUPSERVER="ls720dd7b.local"
+# # Local DNS entry of NAS
+# BACKUPSERVER="ls720dd7b.local"
 
-# Check if destination directory is mounted
-# Test to see if backup mnt is available
+# # Check if destination directory is mounted
+# # Test to see if backup mnt is available
 
-if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
-  echo
-  echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
-  echo
+# if mount | grep "//${BACKUPSERVER}/vault/backups on /mnt/remote_cifs type cifs" > /dev/null; then
+#   echo
+#   echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
+#   echo
 
-# Check on Immutable Systems
-elif mount | grep "//${BACKUPSERVER}/vault/backups on /var/mnt/remote_cifs type cifs" > /dev/null; then
-  echo
-  echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
-  echo
+# # Check on Immutable Systems
+# elif mount | grep "//${BACKUPSERVER}/vault/backups on /var/mnt/remote_cifs type cifs" > /dev/null; then
+#   echo
+#   echo -e "Mount point is AVAILABLE! Okay to backup/restore!"
+#   echo
 
-else
-  echo
-  echo -e "!! WARNING !!  Mount point is UNAVAILABLE!!  Use 'sudo mount -a' to remount."
-  echo
-  exit 1
-fi
+# else
+#   echo
+#   echo -e "!! WARNING !!  Mount point is UNAVAILABLE!!  Use 'sudo mount -a' to remount."
+#   echo
+#   exit 1
+# fi
 
 
 # Run the rsync command and log the results (based on success of each previous command)
