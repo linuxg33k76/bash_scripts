@@ -34,7 +34,7 @@ fi
 # if 3rd argument is given, use it as the results log file path
 
 if [ -n "$3" ]; then
-  RESULTS_FILE="$1"
+  RESULTS_FILE="$3"
 else
   RESULTS_FILE="$HOME/steampicssync_results.log"
 fi
@@ -65,7 +65,12 @@ fi
 
 
 # Run the rsync command and log the results (based on success of each previous command)
-echo "$DATE" | tee -a $RESULTS_FILE && rsync -av --delete $SOURCE_DIR $DEST_DIR | tee -a $RESULTS_FILE && echo "--------------------------------------------------------" | tee -a $RESULTS_FILE && echo "" | tee -a $RESULTS_FILE
+echo "$DATE" >> $RESULTS_FILE
+rsync -av $SOURCE_DIR $DEST_DIR && rsync -av $DEST_DIR $SOURCE_DIR | tee -a $RESULTS_FILE
+echo "Source File Count: $(ls -l $SOURCE_DIR | wc -l)" | tee -a $RESULTS_FILE 
+echo "Destination File Count: $(ls -l $DEST_DIR | wc -l)" | tee -a $RESULTS_FILE
+echo >> $RESULTS_FILE && echo "--------------------------------------------------------" >> $RESULTS_FILE && echo "" >> $RESULTS_FILE
 
 # End of script
-exit 0
+exit 0  
+
