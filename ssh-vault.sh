@@ -4,7 +4,7 @@ set -eo pipefail
 
 SSH_DIR="$HOME/.ssh"
 GNUPG_DIR="${GNUPGHOME:-$HOME/.gnupg}"
-DEFAULT_BACKUP_NAME="$HOME/keys_backup_$(date +%Y-%m-%d_%Hh%Mm%Ss).tar.gz.gpg"
+DEFAULT_BACKUP_NAME="$HOME/ssh_keys_backup_$(date +%Y-%m-%d_%Hh%Mm%Ss).tar.gz.gpg"
 
 fix_ssh_permissions() {
     echo "Enforcing strict SSH permissions..."
