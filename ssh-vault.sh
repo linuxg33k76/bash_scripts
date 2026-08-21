@@ -171,12 +171,13 @@ perform_restore() {
 }
 
 # --- Main Menu ---
-
+echo
 echo "=== SSH & GPG Key Vault ==="
 echo "1) Backup keys"
 echo "2) Restore keys"
 echo "3) Exit"
 read -rp "Select an option [1-3]: " CHOICE
+echo
 
 case "$CHOICE" in
     1)
