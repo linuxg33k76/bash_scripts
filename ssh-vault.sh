@@ -6,6 +6,26 @@ SSH_DIR="$HOME/.ssh"
 GNUPG_DIR="${GNUPGHOME:-$HOME/.gnupg}"
 DEFAULT_BACKUP_NAME="$HOME/ssh_keys_backup_$(hostname)_$(date +%Y-%m-%d_%Hh%Mm%Ss).tar.gz.gpg"
 
+# Prefer Homebrew-installed GPG when available
+GPG_BIN=""
+if command -v brew >/dev/null 2>&1; then
+    BREW_GNUPG_PREFIX=$(brew --prefix gnupg 2>/dev/null || true)
+fi
+if [ -n "${BREW_GNUPG_PREFIX:-}" ] && [ -x "${BREW_GNUPG_PREFIX}/bin/gpg" ]; then
+    GPG_BIN="${BREW_GNUPG_PREFIX}/bin/gpg"
+elif [ -x "/opt/homebrew/bin/gpg" ]; then
+    GPG_BIN="/opt/homebrew/bin/gpg"
+elif [ -x "/usr/local/bin/gpg" ]; then
+    GPG_BIN="/usr/local/bin/gpg"
+else
+    GPG_BIN="$(command -v gpg || true)"
+fi
+
+if [ -z "${GPG_BIN}" ]; then
+    echo "Error: gpg not found. Install gnupg via Homebrew (brew install gnupg) or system package." >&2
+    exit 1
+fi
+
 fix_ssh_permissions() {
     echo "Enforcing strict SSH permissions..."
     chmod 700 "$SSH_DIR"
@@ -32,7 +52,8 @@ perform_backup() {
     TARGET_PATH="${TARGET_PATH/#\~/$HOME}"
 
     TEMP_STAGING=$(mktemp -d)
-    trap 'rm -rf "$TEMP_STAGING"' EXIT
+    PW_FILE=""
+    trap 'rm -rf "$TEMP_STAGING"; [ -n "$PW_FILE" ] && rm -f "$PW_FILE"' EXIT
 
     # Stage SSH keys
     if [ -d "$SSH_DIR" ] && [ -n "$(ls -A "$SSH_DIR" 2>/dev/null)" ]; then
@@ -46,17 +67,32 @@ perform_backup() {
     if [[ "$INCLUDE_GPG" =~ ^[Yy]$ ]]; then
         mkdir -p "$TEMP_STAGING/gpg_exports"
         echo "Exporting GPG public keys..."
-        gpg --armor --export > "$TEMP_STAGING/gpg_exports/public_keys.asc" 2>/dev/null || true
+        "$GPG_BIN" --armor --export > "$TEMP_STAGING/gpg_exports/public_keys.asc" 2>/dev/null || true
 
         echo "Exporting GPG secret keys..."
-        gpg --armor --export-secret-keys > "$TEMP_STAGING/gpg_exports/secret_keys.asc" 2>/dev/null || true
+        "$GPG_BIN" --armor --export-secret-keys > "$TEMP_STAGING/gpg_exports/secret_keys.asc" 2>/dev/null || true
 
         echo "Exporting GPG ownertrust..."
-        gpg --export-ownertrust > "$TEMP_STAGING/gpg_exports/ownertrust.txt" 2>/dev/null || true
+        "$GPG_BIN" --export-ownertrust > "$TEMP_STAGING/gpg_exports/ownertrust.txt" 2>/dev/null || true
     fi
 
+    # Prompt for symmetric passphrase (use loopback so pinentry isn't required)
+    read -rsp "Enter passphrase to encrypt archive: " PW1
+    echo
+    read -rsp "Confirm passphrase: " PW2
+    echo
+    if [ "$PW1" != "$PW2" ]; then
+        echo "Error: passphrases do not match." >&2
+        exit 1
+    fi
+
+    PW_FILE=$(mktemp)
+    chmod 600 "$PW_FILE"
+    printf '%s' "$PW1" > "$PW_FILE"
+    unset PW1 PW2
+
     echo "Encrypting backup with AES-256..."
-    tar -czf - -C "$TEMP_STAGING" . | gpg --symmetric --cipher-algo AES256 -o "$TARGET_PATH"
+    tar -czf - -C "$TEMP_STAGING" . | "$GPG_BIN" --symmetric --cipher-algo AES256 --pinentry-mode loopback --passphrase-file "$PW_FILE" -o "$TARGET_PATH"
 
     echo "Backup completed successfully: $TARGET_PATH"
 }
@@ -71,10 +107,19 @@ perform_restore() {
     fi
 
     TEMP_RESTORE=$(mktemp -d)
-    trap 'rm -rf "$TEMP_RESTORE"' EXIT
+    PW_FILE=""
+    trap 'rm -rf "$TEMP_RESTORE"; [ -n "$PW_FILE" ] && rm -f "$PW_FILE"' EXIT
 
     echo "Decrypting archive..."
-    gpg --decrypt "$SOURCE_PATH" | tar -xzf - -C "$TEMP_RESTORE"
+    # Prompt for passphrase to decrypt (use loopback to avoid pinentry issues when piping)
+    read -rsp "Enter passphrase to decrypt archive: " PW
+    echo
+    PW_FILE=$(mktemp)
+    chmod 600 "$PW_FILE"
+    printf '%s' "$PW" > "$PW_FILE"
+    unset PW
+
+    "$GPG_BIN" --pinentry-mode loopback --passphrase-file "$PW_FILE" --decrypt "$SOURCE_PATH" | tar -xzf - -C "$TEMP_RESTORE"
 
     # Restore SSH
     if [ -d "$TEMP_RESTORE/.ssh" ]; then
@@ -105,17 +150,17 @@ perform_restore() {
 
             if [ -s "$TEMP_RESTORE/gpg_exports/public_keys.asc" ]; then
                 echo "Importing public keys..."
-                gpg --import "$TEMP_RESTORE/gpg_exports/public_keys.asc"
+                "$GPG_BIN" --import "$TEMP_RESTORE/gpg_exports/public_keys.asc"
             fi
 
             if [ -s "$TEMP_RESTORE/gpg_exports/secret_keys.asc" ]; then
                 echo "Importing secret keys..."
-                gpg --import "$TEMP_RESTORE/gpg_exports/secret_keys.asc"
+                "$GPG_BIN" --import "$TEMP_RESTORE/gpg_exports/secret_keys.asc"
             fi
 
             if [ -s "$TEMP_RESTORE/gpg_exports/ownertrust.txt" ]; then
                 echo "Importing ownertrust..."
-                gpg --import-ownertrust "$TEMP_RESTORE/gpg_exports/ownertrust.txt"
+                "$GPG_BIN" --import-ownertrust "$TEMP_RESTORE/gpg_exports/ownertrust.txt"
             fi
 
             echo "GPG keys and trustdb successfully imported."
